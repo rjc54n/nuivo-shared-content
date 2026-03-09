@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAC Customer Experience MVP Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f7f8fc;
+    --surface2: #edf0f7;
+    --in-color: #E20145;
+    --in-glow: rgba(226,1,69,0.08);
+    --out-color: #D63B3B;
+    --out-glow: rgba(214,59,59,0.08);
+    --neutral: #3D5FA0;
+    --text: #111827;
+    --muted: #6B7A99;
+    --border: rgba(0,0,0,0.09);
+    --gold: #B8860B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid effect */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(61,95,160,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(61,95,160,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  header {
+    padding: 3.5rem 0 2.5rem;
+    text-align: center;
+  }
+
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.15;
+    background: linear-gradient(135deg, #111827 30%, #3D5FA0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 2.5rem;
+  }
+
+
+  /* TOGGLE CONTROLS */
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    padding: 0.5rem 1.4rem;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .filter-btn:hover { color: var(--text); border-color: rgba(0,0,0,0.25); }
+  .filter-btn.active-all  { background: var(--surface2); color: var(--text); border-color: var(--neutral); }
+  .filter-btn.active-in   { background: var(--in-glow); color: var(--in-color); border-color: var(--in-color); }
+  .filter-btn.active-out  { background: var(--out-glow); color: var(--out-color); border-color: var(--out-color); }
+
+  /* STATS BAR */
+  .stats {
+    display: flex;
+    gap: 1px;
+    background: var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+    border: 1px solid var(--border);
+  }
+
+  .stat {
+    flex: 1;
+    padding: 1.2rem 1.5rem;
+    background: var(--surface);
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .stat:hover { background: var(--surface2); }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-number.green { color: var(--in-color); }
+  .stat-number.red   { color: var(--out-color); }
+  .stat-number.blue  { color: var(--neutral); }
+
+  .stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* PHASE SECTIONS */
+  .phase-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    padding-left: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .phase-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* CARDS GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, opacity 0.3s;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.4s ease both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+    transition: opacity 0.2s;
+    opacity: 0.7;
+  }
+
+  .card.in::before  { background: var(--in-color); }
+  .card.out::before { background: var(--out-color); }
+
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0,0,0,0.15);
+  }
+  .card.in:hover  { box-shadow: 0 12px 40px var(--in-glow); }
+  .card.out:hover { box-shadow: 0 12px 40px var(--out-glow); }
+
+  .card.hidden {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    visibility: hidden;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .card.in .card-icon  { background: var(--in-glow); }
+  .card.out .card-icon { background: var(--out-glow); }
+
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--text);
+    padding-top: 0.1rem;
+  }
+
+  .card-body {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    margin-top: 1rem;
+  }
+
+  .badge.in  { background: var(--in-glow); color: var(--in-color); border: 1px solid rgba(226,1,69,0.2); }
+  .badge.out { background: var(--out-glow); color: var(--out-color); border: 1px solid rgba(214,59,59,0.2); }
+
+  /* CLAIMS FULL-WIDTH CARD */
+  .card.claims-card {
+    grid-column: 1 / -1;
+  }
+
+  .claims-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 700px) {
+    .claims-layout { grid-template-columns: 1fr; }
+  }
+
+  .claims-component {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .claims-component-header {
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .c1 .claims-component-header { background: rgba(61,95,160,0.07); border-bottom: 1px solid rgba(61,95,160,0.12); }
+  .c2 .claims-component-header { background: rgba(226,1,69,0.05); border-bottom: 1px solid rgba(226,1,69,0.1); }
+
+  .claims-component-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .c1 .claims-component-label { color: var(--neutral); }
+  .c2 .claims-component-label { color: var(--in-color); }
+
+  .claims-component-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .claims-component-body {
+    padding: 0.75rem 1rem;
+  }
+
+  .claims-component-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 0.75rem;
+  }
+
+  .variant-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+  }
+
+  .variant-id {
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 2rem;
+    padding-top: 0.05rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .variant-info { flex: 1; }
+
+  .variant-name {
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+
+  .variant-detail {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .variant-status {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.5rem;
+    border-radius: 100px;
+    white-space: nowrap;
+    align-self: flex-start;
+    margin-top: 0.05rem;
+  }
+
+  .vs-mvp    { background: var(--in-glow); color: var(--in-color); border: 1px solid rgba(226,1,69,0.2); }
+  .vs-future { background: rgba(0,0,0,0.04); color: var(--muted); border: 1px solid var(--border); }
+  .vs-tbd    { background: rgba(184,134,11,0.08); color: var(--gold); border: 1px solid rgba(184,134,11,0.2); }
+  .vs-r2     { background: rgba(61,95,160,0.07); color: var(--neutral); border: 1px solid rgba(61,95,160,0.2); }
+
+  .open-q {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.68rem;
+    color: var(--gold);
+    background: rgba(184,134,11,0.07);
+    border: 1px solid rgba(184,134,11,0.18);
+    padding: 0.18rem 0.55rem;
+    border-radius: 100px;
+    margin-top: 0.5rem;
+  }
+
+  /* MATURITY SECTION */
+  .maturity-section {
+    margin: 3rem 0 2.5rem;
+  }
+
+  .maturity-header {
+    margin-bottom: 2rem;
+  }
+
+  .maturity-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .maturity-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .maturity-tagline {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  .maturity-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .m-card {
+    border-radius: 0;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .m-card:first-child { border-radius: 16px 16px 0 0; }
+  .m-card:last-child  { border-radius: 0 0 16px 16px; }
+
+  .m-card:hover { transform: scaleX(1.005); z-index: 2; }
+
+  .m-card-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+    padding: 1.6rem 2rem;
+  }
+
+  .m1 .m-card-inner { background: #FDF5F7; border: 1px solid rgba(226,1,69,0.15); border-bottom: none; }
+  .m2 .m-card-inner { background: #F5F7FC; border: 1px solid rgba(61,95,160,0.15); border-top: none; border-bottom: none; }
+  .m3 .m-card-inner { background: #FDFAF0; border: 1px solid rgba(184,134,11,0.2); border-top: none; }
+
+  .m-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1;
+    min-width: 3.5rem;
+    opacity: 0.18;
+  }
+
+  .m1 .m-number { color: var(--in-color); }
+  .m2 .m-number { color: var(--neutral); }
+  .m3 .m-number { color: var(--gold); }
+
+  .m-content { flex: 1; }
+
+  .m-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+    opacity: 0.7;
+  }
+
+  .m1 .m-tag { color: var(--in-color); }
+  .m2 .m-tag { color: var(--neutral); }
+  .m3 .m-tag { color: var(--gold); }
+
+  .m-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .m-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 0.9rem;
+  }
+
+  .m-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .m-features span {
+    font-size: 0.67rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 0.22rem 0.65rem;
+    border-radius: 100px;
+    background: rgba(0,0,0,0.04);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .m-arrow {
+    font-size: 1.4rem;
+    opacity: 0.25;
+    min-width: 2rem;
+    text-align: center;
+    color: var(--text);
+  }
+
+  .m-progress {
+    height: 3px;
+    background: rgba(0,0,0,0.06);
+  }
+
+  .m1 .m-bar { background: var(--in-color); height: 3px; transition: width 1s ease; }
+  .m2 .m-bar { background: var(--neutral); height: 3px; transition: width 1s ease; }
+  .m3 .m-bar { background: var(--gold);    height: 3px; transition: width 1s ease; }
+
+  .expand-hint {
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-top: 0.9rem;
+    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>NAC Customer Experience<br>MVP Roadmap</h1>
+  </header>
+
+  <!-- FILTERS -->
+  <div class="controls">
+    <button class="filter-btn active-all" onclick="filter('all', this)">All Modules</button>
+    <button class="filter-btn" onclick="filter('in', this)">✓ In MVP</button>
+    <button class="filter-btn" onclick="filter('out', this)">✕ Excluded</button>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-number green" id="count-in">8</div>
+      <div class="stat-label">In MVP</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number red" id="count-out">8</div>
+      <div class="stat-label">Excluded</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number blue">3</div>
+      <div class="stat-label">Maturity Levels</div>
+    </div>
+
+  </div>
+
+  <!-- ─── IN MVP ─── -->
+  <div class="phase-label" id="label-in">Included in MVP</div>
+  <div class="grid" id="grid-in">
+
+    <div class="card in">
+      <div class="card-header">
+        <div class="card-icon">🏗️</div>
+        <div class="card-title">Environment & Campaign Setup</div>
+      </div>
+      <div class="card-body">Core data model: sponsor records, campaigns linked to insurance covers and plans.</div>
+      <div class="badge in">✓ In MVP</div>
+    </div>
+
+    <div class="card in">
+      <div class="card-header">
+        <div class="card-icon">📬</div>
+        <div class="card-title">Invite / Call to Action</div>
+      </div>
+      <div class="card-body">Pre-sale and point-of-sale promotion, followed by ingestion of entitlements and contacts, then outreach via email and/or WhatsApp.</div>
+      <div class="badge in">✓ In MVP</div>
+    </div>
+
+    <div class="card in">
+      <div class="card-header">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Activation Journey</div>
+      </div>
+      <div class="card-body">Customer details capture, IMEI collection, insurance record creation, policy document production, and delivery to the customer's Wallet Pass. Scope of Wallet Pass implementation is an open question to HK.</div>
+      <div class="badge in">✓ In MVP</div>
+    </div>
+
+    <div class="card in">
+      <div class="card-header">
+        <div class="card-icon">✅</div>
+        <div class="card-title">Consent Capture</div>
+      </div>
+      <div class="card-body">Secure, granular and auditable record of informed, GDPR-compliant marketing consent captured during activation.</div>
+      <div class="badge in">✓ In MVP</div>
+    </div>
+
+    <div class="card in">
+      <div class="card-header">
+        <div class="card-icon">📣</div>
+        <div class="card-title">Basic In-Event Engagement</div>
+      </div>
+      <div class="card-body">Limited sponsor-facing marketing communications (e.g. discounted merchandise) via external link. Two emails and a text as the practical target.</div>
+      <div class="badge in">✓ In MVP</div>
+    </div>
+
+    <div class="card in claims-card">
+      <div class="card-header">
+        <div class="card-icon">🗂️</div>
+        <div class="card-title">Claims Domain</div>
+      </div>
+      <div class="card-body">New module being built by HK, comprising two distinct components. Excess payment processing to be confirmed with HK — desirable but not fatal if handled via CTDI.</div>
+
+      <div class="claims-layout">
+
+        <!-- COMPONENT 1 -->
+        <div class="claims-component c1">
+          <div class="claims-component-header">
+            <span class="claims-component-label">Component 1</span>
+            <span class="claims-component-title">Internal Admin Workbench</span>
+            <span class="variant-status vs-mvp">✓ MVP</span>
+          </div>
+          <div class="claims-component-body">
+            <div class="claims-component-desc">Where claim decisions are made. Used by the internal operations team to review, assess and action submitted claims across all product categories.</div>
+          </div>
+        </div>
+
+        <!-- COMPONENT 2 -->
+        <div class="claims-component c2">
+          <div class="claims-component-header">
+            <span class="claims-component-label">Component 2</span>
+            <span class="claims-component-title">Customer-Facing Claim Portal</span>
+            <span class="variant-status vs-mvp">✓ MVP</span>
+          </div>
+          <div class="claims-component-body">
+            <div class="claims-component-desc">Where claims are reported and tracked by customers. MVP covers the basic MPI flow for Events only.</div>
+
+            <div class="variant-row">
+              
+              <div class="variant-info">
+                <div class="variant-name">Basic MPI — Events</div>
+                <div class="variant-detail">Accidental damage &amp; theft. Standard forms-driven flow. Likely what HK has already built.</div>
+              </div>
+              <span class="variant-status vs-mvp">✓ MVP</span>
+            </div>
+
+            <div class="open-q">⚠ Open question: excess payment processing in scope for HK?</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="badge in">✓ In MVP (Component 1 + Basic MPI Portal)</div>
+    </div>
+
+    <div class="card in">
+      <div class="card-header">
+        <div class="card-icon">💾</div>
+        <div class="card-title">Consented Data Asset (Basic DB)</div>
+      </div>
+      <div class="card-body">A database of consented, contactable customer records as the primary value output delivered to sponsors.</div>
+      <div class="badge in">✓ In MVP</div>
+    </div>
+
+    <div class="card in">
+      <div class="card-header">
+        <div class="card-icon">🔧</div>
+        <div class="card-title">CTDI Repair Integration</div>
+      </div>
+      <div class="card-body">File-exchange integration with CTDI to activate physical device repair and replacement. Practical to include given the file-based nature of the exchange, and operationally essential.</div>
+      <div class="badge in">✓ In MVP</div>
+    </div>
+
+  </div>
+  <div class="phase-label" id="label-out">Excluded from MVP</div>
+  <div class="grid" id="grid-out">
+
+    <div class="card out">
+      <div class="card-header">
+        <div class="card-icon">🗂️</div>
+        <div class="card-title">Claim Portal — Future Variants</div>
+      </div>
+      <div class="card-body">Three additional customer portal variants planned beyond MVP.</div>
+
+      <div style="margin-top: 0.8rem;">
+        <div class="variant-row" style="border-top: 1px solid var(--border); padding-top: 0.5rem;">
+          <div class="variant-info">
+            <div class="variant-name" style="font-size:0.8rem; font-weight:500; color:var(--text); margin-bottom:0.15rem;">Enhanced MPI — Events</div>
+            <div class="variant-detail">E-commerce features (upgrade at claim). Requires material event volumes to justify.</div>
+          </div>
+        </div>
+        <div class="variant-row">
+          <div class="variant-info">
+            <div class="variant-name" style="font-size:0.8rem; font-weight:500; color:var(--text); margin-bottom:0.15rem;">Basic MPI — Apple Products</div>
+            <div class="variant-detail">Damage &amp; theft. Timing subject to Apple contract signing.</div>
+          </div>
+          <span class="variant-status vs-tbd">TBD</span>
+        </div>
+        <div class="variant-row">
+          <div class="variant-info">
+            <div class="variant-name" style="font-size:0.8rem; font-weight:500; color:var(--text); margin-bottom:0.15rem;">Basic Claims — Carrefour Appliances</div>
+            <div class="variant-detail">Breakdown cover. Likely second release in practice.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="badge out">✕ Excluded from MVP</div>
+    </div>
+
+    <div class="card out">
+      <div class="card-header">
+        <div class="card-icon">💸</div>
+        <div class="card-title">Upsell Journey (Free → Paid)</div>
+      </div>
+      <div class="card-body">Conversion path from free insurance to paid premium policy.</div>
+      <div class="badge out">✕ Excluded</div>
+    </div>
+
+    <div class="card out">
+      <div class="card-header">
+        <div class="card-icon">🌟</div>
+        <div class="card-title">New WOW Claims Experience</div>
+      </div>
+      <div class="card-body">Next-generation, customer-delighting claims journey. Acknowledged as a future build.</div>
+      <div class="badge out">✕ Excluded</div>
+    </div>
+
+    <div class="card out">
+      <div class="card-header">
+        <div class="card-icon">🍎</div>
+        <div class="card-title">Apple Integration</div>
+      </div>
+      <div class="card-body">Apple Care Plus / Turkey channel. Zero development started; no requirement spec received.</div>
+      <div class="badge out">✕ Excluded</div>
+    </div>
+
+    <div class="card out">
+      <div class="card-header">
+        <div class="card-icon">🛒</div>
+        <div class="card-title">Carrefour Vertical</div>
+      </div>
+      <div class="card-body">Retail insurance distribution via Carrefour. No customer requirements or due diligence completed.</div>
+      <div class="badge out">✕ Excluded</div>
+    </div>
+
+    <div class="card out">
+      <div class="card-header">
+        <div class="card-icon">🎮</div>
+        <div class="card-title">Gamification / Referral Sharing</div>
+      </div>
+      <div class="card-body">"Invite your friends" viral mechanics and loyalty gamification features.</div>
+      <div class="badge out">✕ Excluded</div>
+    </div>
+
+    <div class="card out">
+      <div class="card-header">
+        <div class="card-icon">🧠</div>
+        <div class="card-title">CDP / Identity Graph</div>
+      </div>
+      <div class="card-body">Customer Data Platform and cross-event identity resolution for repeat concert-goers.</div>
+      <div class="badge out">✕ Excluded</div>
+    </div>
+
+    <div class="card out">
+      <div class="card-header">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Marketing Automation (Braze / Iterable)</div>
+      </div>
+      <div class="card-body">High-end engagement platform integration. Manual workarounds acceptable at MVP scale.</div>
+      <div class="badge out">✕ Excluded</div>
+    </div>
+
+
+
+    <div class="card out">
+      <div class="card-header">
+        <div class="card-icon">📄</div>
+        <div class="card-title">CMS & Analytics Tools</div>
+      </div>
+      <div class="card-body">Content Management System for multilingual templates and sponsor-facing analytics dashboards.</div>
+      <div class="badge out">✕ Excluded</div>
+    </div>
+
+  </div>
+
+  <!-- MATURITY LEVELS -->
+  <div class="maturity-section">
+    <div class="maturity-header">
+      <div class="maturity-eyebrow">Delivery Philosophy</div>
+      <div class="maturity-title">Three Levels of Maturity</div>
+      <div class="maturity-tagline">MVP is not the ceiling — it's the launchpad.</div>
+    </div>
+
+    <div class="maturity-cards">
+
+      <div class="m-card m1">
+        <div class="m-card-inner">
+          <div class="m-number">01</div>
+          <div class="m-content">
+            <div class="m-tag">Now · Target: May 2026</div>
+            <div class="m-name">Get It Over the Line</div>
+            <div class="m-desc">Scrappy and manual behind the scenes. Enough to run one event end-to-end and prove the concept works. Speed over elegance.</div>
+            <div class="m-features">
+              <span>Single event</span>
+              <span>Manual ops</span>
+              <span>Basic activation</span>
+              <span>Consent capture</span>
+            </div>
+          </div>
+          <div class="m-arrow">→</div>
+        </div>
+        <div class="m-progress"><div class="m-bar" style="width:35%"></div></div>
+      </div>
+
+      <div class="m-card m2">
+        <div class="m-card-inner">
+          <div class="m-number">02</div>
+          <div class="m-content">
+            <div class="m-tag">Next · Post May</div>
+            <div class="m-name">Sustainable MVP</div>
+            <div class="m-desc">Repeatable and reliable. Handles multiple sponsors and concurrent events without breaking. Backlog items layered in progressively based on learnings.</div>
+            <div class="m-features">
+              <span>Multi-sponsor</span>
+              <span>Automated flows</span>
+              <span>Basic upsell</span>
+              <span>Data asset</span>
+            </div>
+          </div>
+          <div class="m-arrow">→</div>
+        </div>
+        <div class="m-progress"><div class="m-bar" style="width:60%"></div></div>
+      </div>
+
+      <div class="m-card m3">
+        <div class="m-card-inner">
+          <div class="m-number">03</div>
+          <div class="m-content">
+            <div class="m-tag">Future · Scalable</div>
+            <div class="m-name">Scalable Platform</div>
+            <div class="m-desc">The full Neuvo Intelligence vision. CDP, marketing automation, multi-vertical (Apple, Carrefour), identity graph, analytics dashboards and WOW claims experience.</div>
+            <div class="m-features">
+              <span>CDP + identity</span>
+              <span>Braze / Iterable</span>
+              <span>Multi-vertical</span>
+              <span>Full analytics</span>
+            </div>
+          </div>
+          <div class="m-arrow">✦</div>
+        </div>
+        <div class="m-progress"><div class="m-bar" style="width:100%"></div></div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</div>
+
+<script>
+  function filter(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.className = 'filter-btn');
+
+    if (type === 'all') btn.classList.add('active-all');
+    else if (type === 'in') btn.classList.add('active-in');
+    else btn.classList.add('active-out');
+
+    const allCards = document.querySelectorAll('.card');
+    const labelIn  = document.getElementById('label-in');
+    const labelOut = document.getElementById('label-out');
+
+    allCards.forEach(card => {
+      const isIn  = card.classList.contains('in');
+      const isOut = card.classList.contains('out');
+      if (type === 'all') card.classList.remove('hidden');
+      else if (type === 'in')  card.classList.toggle('hidden', !isIn);
+      else if (type === 'out') card.classList.toggle('hidden', !isOut);
+    });
+
+    labelIn.style.display  = type === 'out' ? 'none' : 'flex';
+    labelOut.style.display = type === 'in'  ? 'none' : 'flex';
+
+    // Re-layout grids
+    document.querySelectorAll('.grid').forEach(g => {
+      g.style.display = [...g.querySelectorAll('.card')].every(c => c.classList.contains('hidden'))
+        ? 'none' : 'grid';
+    });
+  }
+</script>
+</body>
+</html>
