@@ -3,14 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NAC Customer Experience MVP Roadmap v3</title>
-<meta name="description" content="NAC Customer Experience MVP Roadmap v3 for Nuivo, presented as a static roadmap page.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="NAC Customer Experience MVP Roadmap v3">
-<meta property="og:description" content="NAC Customer Experience MVP Roadmap v3 for Nuivo.">
-<meta property="og:url" content="/roadmaps/nac-mvp-v3/">
-<meta property="og:site_name" content="Nuivo Shared Content">
-<meta name="twitter:card" content="summary">
+<title>NAC MVP Roadmap</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -21,6 +14,10 @@
     --in-glow: rgba(226,1,69,0.08);
     --out-color: #D63B3B;
     --out-glow: rgba(214,59,59,0.08);
+    --post-color: #3D5FA0;
+    --post-glow: rgba(61,95,160,0.08);
+    --tbd-color: #B8860B;
+    --tbd-glow: rgba(184,134,11,0.08);
     --neutral: #3D5FA0;
     --text: #111827;
     --muted: #6B7A99;
@@ -105,6 +102,8 @@
   .filter-btn.active-all  { background: var(--surface2); color: var(--text); border-color: var(--neutral); }
   .filter-btn.active-in   { background: var(--in-glow); color: var(--in-color); border-color: var(--in-color); }
   .filter-btn.active-out  { background: var(--out-glow); color: var(--out-color); border-color: var(--out-color); }
+  .filter-btn.active-post { background: var(--post-glow); color: var(--post-color); border-color: var(--post-color); }
+  .filter-btn.active-tbd  { background: var(--tbd-glow); color: var(--tbd-color); border-color: var(--tbd-color); }
 
   /* STATS BAR */
   .stats {
@@ -201,6 +200,8 @@
 
   .card.in::before  { background: var(--in-color); }
   .card.out::before { background: var(--out-color); }
+  .card.post::before { background: var(--post-color); }
+  .card.tbd::before  { background: var(--tbd-color); }
 
   .card:hover {
     transform: translateY(-3px);
@@ -208,6 +209,8 @@
   }
   .card.in:hover  { box-shadow: 0 12px 40px var(--in-glow); }
   .card.out:hover { box-shadow: 0 12px 40px var(--out-glow); }
+  .card.post:hover { box-shadow: 0 12px 40px var(--post-glow); }
+  .card.tbd:hover  { box-shadow: 0 12px 40px var(--tbd-glow); }
 
   .card.hidden {
     opacity: 0;
@@ -236,6 +239,8 @@
 
   .card.in .card-icon  { background: var(--in-glow); }
   .card.out .card-icon { background: var(--out-glow); }
+  .card.post .card-icon { background: var(--post-glow); }
+  .card.tbd .card-icon  { background: var(--tbd-glow); }
 
   .card-title {
     font-size: 0.95rem;
@@ -266,6 +271,8 @@
 
   .badge.in  { background: var(--in-glow); color: var(--in-color); border: 1px solid rgba(226,1,69,0.2); }
   .badge.out { background: var(--out-glow); color: var(--out-color); border: 1px solid rgba(214,59,59,0.2); }
+  .badge.post { background: var(--post-glow); color: var(--post-color); border: 1px solid rgba(61,95,160,0.2); }
+  .badge.tbd  { background: var(--tbd-glow); color: var(--tbd-color); border: 1px solid rgba(184,134,11,0.2); }
 
   /* CLAIMS FULL-WIDTH CARD */
   .card.claims-card {
@@ -389,154 +396,6 @@
     margin-top: 0.5rem;
   }
 
-  /* MATURITY SECTION */
-  .maturity-section {
-    margin: 3rem 0 2.5rem;
-  }
-
-  .maturity-header {
-    margin-bottom: 2rem;
-  }
-
-  .maturity-eyebrow {
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
-  }
-
-  .maturity-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 0.3rem;
-  }
-
-  .maturity-tagline {
-    color: var(--muted);
-    font-size: 0.85rem;
-  }
-
-  .maturity-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .m-card {
-    border-radius: 0;
-    overflow: hidden;
-    transition: transform 0.2s;
-  }
-
-  .m-card:first-child { border-radius: 16px 16px 0 0; }
-  .m-card:last-child  { border-radius: 0 0 16px 16px; }
-
-  .m-card:hover { transform: scaleX(1.005); z-index: 2; }
-
-  .m-card-inner {
-    display: flex;
-    align-items: center;
-    gap: 1.8rem;
-    padding: 1.6rem 2rem;
-  }
-
-  .m1 .m-card-inner { background: #FDF5F7; border: 1px solid rgba(226,1,69,0.15); border-bottom: none; }
-  .m2 .m-card-inner { background: #F5F7FC; border: 1px solid rgba(61,95,160,0.15); border-top: none; border-bottom: none; }
-  .m3 .m-card-inner { background: #FDFAF0; border: 1px solid rgba(184,134,11,0.2); border-top: none; }
-
-  .m-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    font-weight: 900;
-    line-height: 1;
-    min-width: 3.5rem;
-    opacity: 0.18;
-  }
-
-  .m1 .m-number { color: var(--in-color); }
-  .m2 .m-number { color: var(--neutral); }
-  .m3 .m-number { color: var(--gold); }
-
-  .m-content { flex: 1; }
-
-  .m-tag {
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    margin-bottom: 0.35rem;
-    opacity: 0.7;
-  }
-
-  .m1 .m-tag { color: var(--in-color); }
-  .m2 .m-tag { color: var(--neutral); }
-  .m3 .m-tag { color: var(--gold); }
-
-  .m-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 0.5rem;
-  }
-
-  .m-desc {
-    font-size: 0.8rem;
-    color: var(--muted);
-    line-height: 1.6;
-    max-width: 520px;
-    margin-bottom: 0.9rem;
-  }
-
-  .m-features {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .m-features span {
-    font-size: 0.67rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    padding: 0.22rem 0.65rem;
-    border-radius: 100px;
-    background: rgba(0,0,0,0.04);
-    color: var(--muted);
-    border: 1px solid var(--border);
-  }
-
-  .m-arrow {
-    font-size: 1.4rem;
-    opacity: 0.25;
-    min-width: 2rem;
-    text-align: center;
-    color: var(--text);
-  }
-
-  .m-progress {
-    height: 3px;
-    background: rgba(0,0,0,0.06);
-  }
-
-  .m1 .m-bar { background: var(--in-color); height: 3px; transition: width 1s ease; }
-  .m2 .m-bar { background: var(--neutral); height: 3px; transition: width 1s ease; }
-  .m3 .m-bar { background: var(--gold);    height: 3px; transition: width 1s ease; }
-
-  .expand-hint {
-    font-size: 0.68rem;
-    color: var(--muted);
-    margin-top: 0.9rem;
-    opacity: 0.6;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
-
-
 </style>
 </head>
 <body>
@@ -544,35 +403,40 @@
 <div class="container">
 
   <header>
-    <h1>NAC Customer Experience<br>MVP Roadmap</h1>
+    <h1>NAC MVP Roadmap</h1>
   </header>
 
   <!-- FILTERS -->
   <div class="controls">
     <button class="filter-btn active-all" onclick="filter('all', this)">All Modules</button>
-    <button class="filter-btn" onclick="filter('in', this)">✓ In MVP</button>
+    <button class="filter-btn" onclick="filter('in', this)">✓ Core MVP</button>
+    <button class="filter-btn" onclick="filter('post', this)">⟳ Post MVP</button>
     <button class="filter-btn" onclick="filter('out', this)">✕ Excluded</button>
+    <button class="filter-btn" onclick="filter('tbd', this)">? TBD</button>
   </div>
 
   <!-- STATS -->
   <div class="stats">
     <div class="stat">
-      <div class="stat-number green" id="count-in">8</div>
-      <div class="stat-label">In MVP</div>
+      <div class="stat-number green" id="count-in">9</div>
+      <div class="stat-label">Core MVP</div>
     </div>
     <div class="stat">
-      <div class="stat-number red" id="count-out">8</div>
+      <div class="stat-number blue" id="count-post">3</div>
+      <div class="stat-label">Post MVP</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number red" id="count-out">6</div>
       <div class="stat-label">Excluded</div>
     </div>
     <div class="stat">
-      <div class="stat-number blue">3</div>
-      <div class="stat-label">Maturity Levels</div>
+      <div class="stat-number" style="color:var(--gold)" id="count-tbd">3</div>
+      <div class="stat-label">TBD</div>
     </div>
-
   </div>
 
-  <!-- ─── IN MVP ─── -->
-  <div class="phase-label" id="label-in">Included in MVP</div>
+  <!-- ─── CORE MVP ─── -->
+  <div class="phase-label" id="label-in">Core MVP</div>
   <div class="grid" id="grid-in">
 
     <div class="card in">
@@ -581,7 +445,7 @@
         <div class="card-title">Environment & Campaign Setup</div>
       </div>
       <div class="card-body">Core data model: sponsor records, campaigns linked to insurance covers and plans.</div>
-      <div class="badge in">✓ In MVP</div>
+      <div class="badge in">✓ Core MVP</div>
     </div>
 
     <div class="card in">
@@ -590,16 +454,16 @@
         <div class="card-title">Invite / Call to Action</div>
       </div>
       <div class="card-body">Pre-sale and point-of-sale promotion, followed by ingestion of entitlements and contacts, then outreach via email and/or WhatsApp.</div>
-      <div class="badge in">✓ In MVP</div>
+      <div class="badge in">✓ Core MVP</div>
     </div>
 
     <div class="card in">
       <div class="card-header">
         <div class="card-icon">⚡</div>
-        <div class="card-title">Activation Journey</div>
+        <div class="card-title">Create Activation Journey</div>
       </div>
-      <div class="card-body">Customer details capture, IMEI collection, insurance record creation, policy document production, and delivery to the customer's Wallet Pass. Scope of Wallet Pass implementation is an open question to HK.</div>
-      <div class="badge in">✓ In MVP</div>
+      <div class="card-body">Customer details capture, IMEI collection, insurance record creation, policy document production, and delivery to the customer's Wallet Pass.</div>
+      <div class="badge in">✓ Core MVP</div>
     </div>
 
     <div class="card in">
@@ -608,7 +472,7 @@
         <div class="card-title">Consent Capture</div>
       </div>
       <div class="card-body">Secure, granular and auditable record of informed, GDPR-compliant marketing consent captured during activation.</div>
-      <div class="badge in">✓ In MVP</div>
+      <div class="badge in">✓ Core MVP</div>
     </div>
 
     <div class="card in">
@@ -617,7 +481,7 @@
         <div class="card-title">Basic In-Event Engagement</div>
       </div>
       <div class="card-body">Limited sponsor-facing marketing communications (e.g. discounted merchandise) via external link. Two emails and a text as the practical target.</div>
-      <div class="badge in">✓ In MVP</div>
+      <div class="badge in">✓ Core MVP</div>
     </div>
 
     <div class="card in claims-card">
@@ -625,7 +489,7 @@
         <div class="card-icon">🗂️</div>
         <div class="card-title">Claims Domain</div>
       </div>
-      <div class="card-body">New module being built by HK, comprising two distinct components. Excess payment processing to be confirmed with HK — desirable but not fatal if handled via CTDI.</div>
+      <div class="card-body">New module comprising two distinct components. Excess payment processing to be confirmed — desirable but not fatal if handled via third-party repair provider.</div>
 
       <div class="claims-layout">
 
@@ -655,17 +519,17 @@
               
               <div class="variant-info">
                 <div class="variant-name">Basic MPI — Events</div>
-                <div class="variant-detail">Accidental damage &amp; theft. Standard forms-driven flow. Likely what HK has already built.</div>
+                <div class="variant-detail">Accidental damage &amp; theft. Standard forms-driven flow.</div>
               </div>
               <span class="variant-status vs-mvp">✓ MVP</span>
             </div>
 
-            <div class="open-q">⚠ Open question: excess payment processing in scope for HK?</div>
+            <div class="open-q">⚠ Open question: excess payment processing in scope?</div>
           </div>
         </div>
 
       </div>
-      <div class="badge in">✓ In MVP (Component 1 + Basic MPI Portal)</div>
+      <div class="badge in">✓ Core MVP (Component 1 + Basic MPI Portal)</div>
     </div>
 
     <div class="card in">
@@ -674,19 +538,63 @@
         <div class="card-title">Consented Data Asset (Basic DB)</div>
       </div>
       <div class="card-body">A database of consented, contactable customer records as the primary value output delivered to sponsors.</div>
-      <div class="badge in">✓ In MVP</div>
+      <div class="badge in">✓ Core MVP</div>
     </div>
 
     <div class="card in">
       <div class="card-header">
         <div class="card-icon">🔧</div>
-        <div class="card-title">CTDI Repair Integration</div>
+        <div class="card-title">Third Party Repair Integrations</div>
       </div>
-      <div class="card-body">File-exchange integration with CTDI to activate physical device repair and replacement. Practical to include given the file-based nature of the exchange, and operationally essential.</div>
-      <div class="badge in">✓ In MVP</div>
+      <div class="card-body">Integration with third party repair providers like Warranty Global, CTDI etc. to activate physical device repair and replacement. Practical to include given the file-based nature of the exchange, and operationally essential.</div>
+      <div class="badge in">✓ Core MVP</div>
+    </div>
+
+    <div class="card in">
+      <div class="card-header">
+        <div class="card-icon">📒</div>
+        <div class="card-title">Accounting Platform</div>
+      </div>
+      <div class="card-body">Manages financial reconciliation, invoicing, and revenue reporting across sponsor campaigns and insurance products. Ensures accurate tracking of premium flows, payouts, and partner settlements.</div>
+      <div class="badge in">✓ Core MVP</div>
     </div>
 
   </div>
+
+  <!-- ─── POST MVP LAUNCH ITEMS ─── -->
+  <div class="phase-label" id="label-post">Post MVP Launch Items</div>
+  <div class="grid" id="grid-post">
+
+    <div class="card post">
+      <div class="card-header">
+        <div class="card-icon">💸</div>
+        <div class="card-title">Upsell Journey (Free → Paid)</div>
+      </div>
+      <div class="card-body">Conversion path from free insurance to paid premium policy. Layered in once core activation volumes justify the investment.</div>
+      <div class="badge post">⟳ Post MVP</div>
+    </div>
+
+    <div class="card post">
+      <div class="card-header">
+        <div class="card-icon">👤</div>
+        <div class="card-title">Customer Management</div>
+      </div>
+      <div class="card-body">Centralised platform for managing customer profiles, policy history, communication preferences and support interactions. Enables operations teams to service customers efficiently at scale.</div>
+      <div class="badge post">⟳ Post MVP</div>
+    </div>
+
+    <div class="card post">
+      <div class="card-header">
+        <div class="card-icon">💳</div>
+        <div class="card-title">Payment Service Provider</div>
+      </div>
+      <div class="card-body">Integration with a PSP to handle excess payments, premium collections and refunds directly within the customer journey. Removes manual payment handling and improves conversion on paid products.</div>
+      <div class="badge post">⟳ Post MVP</div>
+    </div>
+
+  </div>
+
+  <!-- ─── EXCLUDED FROM MVP ─── -->
   <div class="phase-label" id="label-out">Excluded from MVP</div>
   <div class="grid" id="grid-out">
 
@@ -724,42 +632,6 @@
 
     <div class="card out">
       <div class="card-header">
-        <div class="card-icon">💸</div>
-        <div class="card-title">Upsell Journey (Free → Paid)</div>
-      </div>
-      <div class="card-body">Conversion path from free insurance to paid premium policy.</div>
-      <div class="badge out">✕ Excluded</div>
-    </div>
-
-    <div class="card out">
-      <div class="card-header">
-        <div class="card-icon">🌟</div>
-        <div class="card-title">New WOW Claims Experience</div>
-      </div>
-      <div class="card-body">Next-generation, customer-delighting claims journey. Acknowledged as a future build.</div>
-      <div class="badge out">✕ Excluded</div>
-    </div>
-
-    <div class="card out">
-      <div class="card-header">
-        <div class="card-icon">🍎</div>
-        <div class="card-title">Apple Integration</div>
-      </div>
-      <div class="card-body">Apple Care Plus / Turkey channel. Zero development started; no requirement spec received.</div>
-      <div class="badge out">✕ Excluded</div>
-    </div>
-
-    <div class="card out">
-      <div class="card-header">
-        <div class="card-icon">🛒</div>
-        <div class="card-title">Carrefour Vertical</div>
-      </div>
-      <div class="card-body">Retail insurance distribution via Carrefour. No customer requirements or due diligence completed.</div>
-      <div class="badge out">✕ Excluded</div>
-    </div>
-
-    <div class="card out">
-      <div class="card-header">
         <div class="card-icon">🎮</div>
         <div class="card-title">Gamification / Referral Sharing</div>
       </div>
@@ -785,8 +657,6 @@
       <div class="badge out">✕ Excluded</div>
     </div>
 
-
-
     <div class="card out">
       <div class="card-header">
         <div class="card-icon">📄</div>
@@ -796,79 +666,49 @@
       <div class="badge out">✕ Excluded</div>
     </div>
 
-  </div>
-
-  <!-- MATURITY LEVELS -->
-  <div class="maturity-section">
-    <div class="maturity-header">
-      <div class="maturity-eyebrow">Delivery Philosophy</div>
-      <div class="maturity-title">Three Levels of Maturity</div>
-      <div class="maturity-tagline">MVP is not the ceiling — it's the launchpad.</div>
+    <div class="card out">
+      <div class="card-header">
+        <div class="card-icon">🤝</div>
+        <div class="card-title">B2B CRM</div>
+      </div>
+      <div class="card-body">CRM tooling for managing sponsor and partner relationships, pipeline tracking and commercial account management. Not required at MVP stage where sponsor volumes are limited.</div>
+      <div class="badge out">✕ Excluded</div>
     </div>
 
-    <div class="maturity-cards">
-
-      <div class="m-card m1">
-        <div class="m-card-inner">
-          <div class="m-number">01</div>
-          <div class="m-content">
-            <div class="m-tag">Now · Target: May 2026</div>
-            <div class="m-name">Get It Over the Line</div>
-            <div class="m-desc">Scrappy and manual behind the scenes. Enough to run one event end-to-end and prove the concept works. Speed over elegance.</div>
-            <div class="m-features">
-              <span>Single event</span>
-              <span>Manual ops</span>
-              <span>Basic activation</span>
-              <span>Consent capture</span>
-            </div>
-          </div>
-          <div class="m-arrow">→</div>
-        </div>
-        <div class="m-progress"><div class="m-bar" style="width:35%"></div></div>
-      </div>
-
-      <div class="m-card m2">
-        <div class="m-card-inner">
-          <div class="m-number">02</div>
-          <div class="m-content">
-            <div class="m-tag">Next · Post May</div>
-            <div class="m-name">Sustainable MVP</div>
-            <div class="m-desc">Repeatable and reliable. Handles multiple sponsors and concurrent events without breaking. Backlog items layered in progressively based on learnings.</div>
-            <div class="m-features">
-              <span>Multi-sponsor</span>
-              <span>Automated flows</span>
-              <span>Basic upsell</span>
-              <span>Data asset</span>
-            </div>
-          </div>
-          <div class="m-arrow">→</div>
-        </div>
-        <div class="m-progress"><div class="m-bar" style="width:60%"></div></div>
-      </div>
-
-      <div class="m-card m3">
-        <div class="m-card-inner">
-          <div class="m-number">03</div>
-          <div class="m-content">
-            <div class="m-tag">Future · Scalable</div>
-            <div class="m-name">Scalable Platform</div>
-            <div class="m-desc">The full Neuvo Intelligence vision. CDP, marketing automation, multi-vertical (Apple, Carrefour), identity graph, analytics dashboards and WOW claims experience.</div>
-            <div class="m-features">
-              <span>CDP + identity</span>
-              <span>Braze / Iterable</span>
-              <span>Multi-vertical</span>
-              <span>Full analytics</span>
-            </div>
-          </div>
-          <div class="m-arrow">✦</div>
-        </div>
-        <div class="m-progress"><div class="m-bar" style="width:100%"></div></div>
-      </div>
-
-    </div>
   </div>
 
+  <!-- ─── TBD ─── -->
+  <div class="phase-label" id="label-tbd">TBD</div>
+  <div class="grid" id="grid-tbd">
 
+    <div class="card tbd">
+      <div class="card-header">
+        <div class="card-icon">🍎</div>
+        <div class="card-title">Apple Integration</div>
+      </div>
+      <div class="card-body">Apple Care Plus / Turkey channel. Zero development started; no requirement spec received. Timing and scope to be determined pending commercial alignment.</div>
+      <div class="badge tbd">? TBD</div>
+    </div>
+
+    <div class="card tbd">
+      <div class="card-header">
+        <div class="card-icon">🛒</div>
+        <div class="card-title">Carrefour Vertical</div>
+      </div>
+      <div class="card-body">Retail insurance distribution via Carrefour. No customer requirements or due diligence completed. Scope and timeline to be confirmed once commercial terms are agreed.</div>
+      <div class="badge tbd">? TBD</div>
+    </div>
+
+    <div class="card tbd">
+      <div class="card-header">
+        <div class="card-icon">🧪</div>
+        <div class="card-title">Multivariant Testing</div>
+      </div>
+      <div class="card-body">A/B and multivariant testing framework to optimise activation journeys, engagement communications and conversion flows. Requires sufficient traffic volumes to produce statistically significant results.</div>
+      <div class="badge tbd">? TBD</div>
+    </div>
+
+  </div>
 
 </div>
 
@@ -876,24 +716,34 @@
   function filter(type, btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.className = 'filter-btn');
 
-    if (type === 'all') btn.classList.add('active-all');
-    else if (type === 'in') btn.classList.add('active-in');
-    else btn.classList.add('active-out');
+    if (type === 'all')  btn.classList.add('active-all');
+    else if (type === 'in')   btn.classList.add('active-in');
+    else if (type === 'post') btn.classList.add('active-post');
+    else if (type === 'out')  btn.classList.add('active-out');
+    else if (type === 'tbd')  btn.classList.add('active-tbd');
 
     const allCards = document.querySelectorAll('.card');
-    const labelIn  = document.getElementById('label-in');
-    const labelOut = document.getElementById('label-out');
+    const labelIn   = document.getElementById('label-in');
+    const labelPost = document.getElementById('label-post');
+    const labelOut  = document.getElementById('label-out');
+    const labelTbd  = document.getElementById('label-tbd');
 
     allCards.forEach(card => {
-      const isIn  = card.classList.contains('in');
-      const isOut = card.classList.contains('out');
-      if (type === 'all') card.classList.remove('hidden');
-      else if (type === 'in')  card.classList.toggle('hidden', !isIn);
-      else if (type === 'out') card.classList.toggle('hidden', !isOut);
+      const isIn   = card.classList.contains('in');
+      const isPost = card.classList.contains('post');
+      const isOut  = card.classList.contains('out');
+      const isTbd  = card.classList.contains('tbd');
+      if (type === 'all')       card.classList.remove('hidden');
+      else if (type === 'in')   card.classList.toggle('hidden', !isIn);
+      else if (type === 'post') card.classList.toggle('hidden', !isPost);
+      else if (type === 'out')  card.classList.toggle('hidden', !isOut);
+      else if (type === 'tbd')  card.classList.toggle('hidden', !isTbd);
     });
 
-    labelIn.style.display  = type === 'out' ? 'none' : 'flex';
-    labelOut.style.display = type === 'in'  ? 'none' : 'flex';
+    labelIn.style.display   = (type === 'out' || type === 'post' || type === 'tbd') ? 'none' : 'flex';
+    labelPost.style.display = (type === 'in'  || type === 'out'  || type === 'tbd') ? 'none' : 'flex';
+    labelOut.style.display  = (type === 'in'  || type === 'post' || type === 'tbd') ? 'none' : 'flex';
+    labelTbd.style.display  = (type === 'in'  || type === 'post' || type === 'out') ? 'none' : 'flex';
 
     // Re-layout grids
     document.querySelectorAll('.grid').forEach(g => {
