@@ -396,6 +396,40 @@
     margin-top: 0.5rem;
   }
 
+  /* MATURITY SECTION */
+  .maturity-section { margin: 3rem 0 2.5rem; }
+  .maturity-header { margin-bottom: 2rem; }
+  .maturity-eyebrow { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .maturity-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+  .maturity-tagline { color: var(--muted); font-size: 0.85rem; }
+  .maturity-cards { display: flex; flex-direction: column; gap: 0; }
+  .m-card { border-radius: 0; overflow: hidden; transition: transform 0.2s; }
+  .m-card:first-child { border-radius: 16px 16px 0 0; }
+  .m-card:last-child  { border-radius: 0 0 16px 16px; }
+  .m-card:hover { transform: scaleX(1.005); z-index: 2; }
+  .m-card-inner { display: flex; align-items: center; gap: 1.8rem; padding: 1.6rem 2rem; }
+  .m1 .m-card-inner { background: #FDF5F7; border: 1px solid rgba(226,1,69,0.15); border-bottom: none; }
+  .m2 .m-card-inner { background: #F5F7FC; border: 1px solid rgba(61,95,160,0.15); border-top: none; border-bottom: none; }
+  .m3 .m-card-inner { background: #FDFAF0; border: 1px solid rgba(184,134,11,0.2); border-top: none; }
+  .m-number { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; line-height: 1; min-width: 3.5rem; opacity: 0.18; }
+  .m1 .m-number { color: var(--in-color); }
+  .m2 .m-number { color: var(--neutral); }
+  .m3 .m-number { color: var(--gold); }
+  .m-content { flex: 1; }
+  .m-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.35rem; opacity: 0.7; }
+  .m1 .m-tag { color: var(--in-color); }
+  .m2 .m-tag { color: var(--neutral); }
+  .m3 .m-tag { color: var(--gold); }
+  .m-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+  .m-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; max-width: 520px; margin-bottom: 0.9rem; }
+  .m-features { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .m-features span { font-size: 0.67rem; font-weight: 500; letter-spacing: 0.05em; padding: 0.22rem 0.65rem; border-radius: 100px; background: rgba(0,0,0,0.04); color: var(--muted); border: 1px solid var(--border); }
+  .m-arrow { font-size: 1.4rem; opacity: 0.25; min-width: 2rem; text-align: center; color: var(--text); }
+  .m-progress { height: 3px; background: rgba(0,0,0,0.06); }
+  .m1 .m-bar { background: var(--in-color); height: 3px; transition: width 1s ease; }
+  .m2 .m-bar { background: var(--neutral); height: 3px; transition: width 1s ease; }
+  .m3 .m-bar { background: var(--gold);    height: 3px; transition: width 1s ease; }
+
 </style>
 </head>
 <body>
@@ -418,11 +452,11 @@
   <!-- STATS -->
   <div class="stats">
     <div class="stat">
-      <div class="stat-number green" id="count-in">9</div>
+      <div class="stat-number green" id="count-in">10</div>
       <div class="stat-label">Core MVP</div>
     </div>
     <div class="stat">
-      <div class="stat-number blue" id="count-post">3</div>
+      <div class="stat-number blue" id="count-post">4</div>
       <div class="stat-label">Post MVP</div>
     </div>
     <div class="stat">
@@ -432,6 +466,10 @@
     <div class="stat">
       <div class="stat-number" style="color:var(--gold)" id="count-tbd">3</div>
       <div class="stat-label">TBD</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number blue">3</div>
+      <div class="stat-label">Maturity Levels</div>
     </div>
   </div>
 
@@ -524,7 +562,7 @@
               <span class="variant-status vs-mvp">✓ MVP</span>
             </div>
 
-            <div class="open-q">⚠ Open question: excess payment processing in scope?</div>
+
           </div>
         </div>
 
@@ -559,6 +597,15 @@
       <div class="badge in">✓ Core MVP</div>
     </div>
 
+    <div class="card in">
+      <div class="card-header">
+        <div class="card-icon">💰</div>
+        <div class="card-title">Excess Payment Handling</div>
+      </div>
+      <div class="card-body">Manages collection of policy excess from customers at the point of claim. Ensures accurate tracking, reconciliation and confirmation of excess payments before repair or replacement is authorised.</div>
+      <div class="badge in">✓ Core MVP</div>
+    </div>
+
   </div>
 
   <!-- ─── POST MVP LAUNCH ITEMS ─── -->
@@ -589,6 +636,15 @@
         <div class="card-title">Payment Service Provider</div>
       </div>
       <div class="card-body">Integration with a PSP to handle excess payments, premium collections and refunds directly within the customer journey. Removes manual payment handling and improves conversion on paid products.</div>
+      <div class="badge post">⟳ Post MVP</div>
+    </div>
+
+    <div class="card post">
+      <div class="card-header">
+        <div class="card-icon">🛡️</div>
+        <div class="card-title">Sanctions Screening</div>
+      </div>
+      <div class="card-body">Automated screening of customers and transactions against global sanctions lists to ensure regulatory compliance. Flags and holds any interactions requiring manual review before policy issuance or claim settlement.</div>
       <div class="badge post">⟳ Post MVP</div>
     </div>
 
@@ -708,6 +764,76 @@
       <div class="badge tbd">? TBD</div>
     </div>
 
+  </div>
+
+  <!-- MATURITY LEVELS -->
+  <div class="maturity-section">
+    <div class="maturity-header">
+      <div class="maturity-eyebrow">Delivery Philosophy</div>
+      <div class="maturity-title">Three Levels of Maturity</div>
+      <div class="maturity-tagline">MVP is not the ceiling — it's the launchpad.</div>
+    </div>
+
+    <div class="maturity-cards">
+
+      <div class="m-card m1">
+        <div class="m-card-inner">
+          <div class="m-number">01</div>
+          <div class="m-content">
+            <div class="m-tag">Now</div>
+            <div class="m-name">Get It Over the Line</div>
+            <div class="m-desc">Scrappy and manual behind the scenes. Enough to run one event end-to-end and prove the concept works. Speed over elegance.</div>
+            <div class="m-features">
+              <span>Single event</span>
+              <span>Manual ops</span>
+              <span>Basic activation</span>
+              <span>Consent capture</span>
+            </div>
+          </div>
+          <div class="m-arrow">→</div>
+        </div>
+        <div class="m-progress"><div class="m-bar" style="width:35%"></div></div>
+      </div>
+
+      <div class="m-card m2">
+        <div class="m-card-inner">
+          <div class="m-number">02</div>
+          <div class="m-content">
+            <div class="m-tag">Next</div>
+            <div class="m-name">Sustainable MVP</div>
+            <div class="m-desc">Repeatable and reliable. Handles multiple sponsors and concurrent events without breaking. Backlog items layered in progressively based on learnings.</div>
+            <div class="m-features">
+              <span>Multi-sponsor</span>
+              <span>Automated flows</span>
+              <span>Basic upsell</span>
+              <span>Data asset</span>
+            </div>
+          </div>
+          <div class="m-arrow">→</div>
+        </div>
+        <div class="m-progress"><div class="m-bar" style="width:60%"></div></div>
+      </div>
+
+      <div class="m-card m3">
+        <div class="m-card-inner">
+          <div class="m-number">03</div>
+          <div class="m-content">
+            <div class="m-tag">Future · Scalable</div>
+            <div class="m-name">Scalable Platform</div>
+            <div class="m-desc">The full Neuvo Intelligence vision. CDP, marketing automation, multi-vertical (Apple, Carrefour), identity graph, analytics dashboards and WOW claims experience.</div>
+            <div class="m-features">
+              <span>CDP + identity</span>
+              <span>Braze / Iterable</span>
+              <span>Multi-vertical</span>
+              <span>Full analytics</span>
+            </div>
+          </div>
+          <div class="m-arrow">✦</div>
+        </div>
+        <div class="m-progress"><div class="m-bar" style="width:100%"></div></div>
+      </div>
+
+    </div>
   </div>
 
 </div>
